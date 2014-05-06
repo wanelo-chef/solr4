@@ -18,9 +18,9 @@
 
 node.set[:solr][:service_name] = 'solr-master'
 
-include_recipe "solr::user"
-include_recipe "solr::install"
-include_recipe "solr::install_newrelic"
+include_recipe "solr4::user"
+include_recipe "solr4::install"
+#include_recipe "solr4::install_newrelic"
 
 auto_commit_enabled = node[:solr][:config][:auto_commit][:max_docs] && node[:solr][:config][:auto_commit][:max_time]
 
@@ -37,7 +37,7 @@ template "#{node[:solr][:master][:home]}/log.conf" do
   notifies :restart, "service[#{node[:solr][:service_name]}]"
 end
 
-template "#{node[:solr][:master][:home]}/solr/conf/solrconfig.xml" do
+template "#{node[:solr][:master][:home]}/solr/collection1/conf/solrconfig.xml" do
   owner node[:solr][:solr_user]
   mode "0600"
   variables({
@@ -46,8 +46,8 @@ template "#{node[:solr][:master][:home]}/solr/conf/solrconfig.xml" do
     :master => node[:solr][:master],
     :auto_commit => auto_commit_enabled
   })
-  only_if { node[:solr][:uses_default_config] || !::File.exists?("#{node[:solr][:replica][:home]}/solr/conf/solrconfig.xml") }
+  only_if { node[:solr][:uses_default_config] || !::File.exists?("#{node[:solr][:replica][:home]}/solr/collection1/conf/solrconfig.xml") }
 end
 
 # create/import smf manifest
-include_recipe 'solr::solr_service'
+include_recipe 'solr4::solr_service'

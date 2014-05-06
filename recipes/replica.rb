@@ -18,9 +18,9 @@
 
 node.set[:solr][:service_name] = 'solr-replica'
 
-include_recipe "solr::user"
-include_recipe "solr::install"
-include_recipe "solr::install_newrelic"
+include_recipe "solr4::user"
+include_recipe "solr4::install"
+include_recipe "solr4::install_newrelic"
 
 # configure solr
 execute "copy example solr home into master" do

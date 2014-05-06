@@ -17,7 +17,7 @@
 # limitations under the License.
 
 include_recipe "java::default"
-include_recipe "solr::user"
+include_recipe "solr4::user"
 
 # download and extract solr
 

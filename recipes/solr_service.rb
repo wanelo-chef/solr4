@@ -41,7 +41,6 @@ smf node[:solr][:service_name] do
   else
     cmd << "-Djetty.port=#{node[:solr][:master][:port]}"
     cmd << "-Djava.util.logging.config.file=#{node[:solr][:master][:home]}/log.conf"
-    cmd << "-Dsolr.data.dir=#{node[:solr][:master][:home]}/solr/data"
     working_directory node[:solr][:master][:home]
   end
 
@@ -52,10 +51,10 @@ smf node[:solr][:service_name] do
   end
 
   # Add NewRelic to start command if an API key is present
-  unless node[:solr][:newrelic][:api_key].to_s.empty?
-    cmd << "-javaagent:#{node[:solr][:newrelic][:jar]}"
-    cmd << "-Dnewrelic.environment=#{node[:solr][:newrelic][:environment]}"
-  end
+  #unless node[:solr][:newrelic][:api_key].to_s.empty?
+  #  cmd << "-javaagent:#{node[:solr][:newrelic][:jar]}"
+  #  cmd << "-Dnewrelic.environment=#{node[:solr][:newrelic][:environment]}"
+  #end
 
   cmd << "-jar start.jar &"
   start_command cmd.join(' ')
